@@ -4,3 +4,8 @@ node_modules
 icracy-live.png
 *-new.png
 .vercel
+.playwright-cli
+data/*.db
+data/*.db-shm
+data/*.db-wal
+output/

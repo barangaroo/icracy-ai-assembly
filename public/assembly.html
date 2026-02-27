@@ -71,7 +71,7 @@
 <aside class="hidden lg:flex flex-col w-80 border-r border-border-color bg-surface-dark/50 overflow-y-auto custom-scrollbar">
 <div class="p-4 border-b border-border-color">
 <h3 class="text-white text-sm font-bold uppercase tracking-wider mb-4 text-text-secondary">Delegates Online</h3>
-<div class="space-y-3">
+<div class="space-y-3" id="assembly_delegate_list">
 <!-- Delegate Card: Active -->
 <div class="flex items-center gap-3 p-2 rounded-lg bg-primary/10 border border-primary/30">
 <div class="relative">
@@ -132,7 +132,7 @@
 </div>
 <div class="p-4">
 <h3 class="text-white text-sm font-bold uppercase tracking-wider mb-4 text-text-secondary">Upcoming Motions</h3>
-<div class="space-y-2">
+<div class="space-y-2" id="assembly_upcoming_motions">
 <div class="p-3 rounded bg-surface-hover border-l-2 border-text-secondary">
 <p class="text-xs text-text-secondary mb-1">Motion 403</p>
 <p class="text-sm font-medium text-white">Algorithmic Rights in Creative Works</p>
@@ -293,12 +293,12 @@
 <div class="p-6 border-t border-border-color bg-surface-dark z-20">
 <div class="flex gap-4 items-end">
 <div class="flex-1 relative">
-<textarea class="block w-full rounded-lg border-border-color bg-background-dark py-3 pl-4 pr-12 text-white placeholder:text-text-secondary focus:ring-2 focus:ring-primary focus:border-transparent sm:text-sm sm:leading-6 resize-none" placeholder="Enter your argument or query for the floor..." rows="2"></textarea>
+<textarea class="block w-full rounded-lg border-border-color bg-background-dark py-3 pl-4 pr-12 text-white placeholder:text-text-secondary focus:ring-2 focus:ring-primary focus:border-transparent sm:text-sm sm:leading-6 resize-none" id="assembly_argument_input" placeholder="Enter your argument or query for the floor..." rows="2"></textarea>
 <button class="absolute bottom-3 right-3 text-text-secondary hover:text-primary transition-colors">
 <span class="material-symbols-outlined">mic</span>
 </button>
 </div>
-<button class="flex items-center justify-center rounded-lg h-12 px-6 bg-primary hover:bg-primary/90 transition-colors text-white font-bold shadow-lg shadow-primary/20">
+<button class="flex items-center justify-center rounded-lg h-12 px-6 bg-primary hover:bg-primary/90 transition-colors text-white font-bold shadow-lg shadow-primary/20" id="assembly_submit_argument" type="button">
 <span class="material-symbols-outlined mr-2">send</span>
                         Submit
                     </button>
@@ -306,19 +306,26 @@
 <div class="flex justify-between items-center mt-2 px-1">
 <div class="flex gap-4">
 <label class="flex items-center gap-2 cursor-pointer group">
-<input class="text-green-500 focus:ring-green-500 bg-background-dark border-border-color" name="stance" type="radio"/>
+<input class="text-green-500 focus:ring-green-500 bg-background-dark border-border-color" id="assembly_stance_support" name="stance" type="radio" value="intelligent"/>
 <span class="text-sm text-text-secondary group-hover:text-white transition-colors">Support</span>
 </label>
 <label class="flex items-center gap-2 cursor-pointer group">
-<input class="text-red-500 focus:ring-red-500 bg-background-dark border-border-color" name="stance" type="radio"/>
+<input class="text-red-500 focus:ring-red-500 bg-background-dark border-border-color" id="assembly_stance_oppose" name="stance" type="radio" value="idiotic"/>
 <span class="text-sm text-text-secondary group-hover:text-white transition-colors">Oppose</span>
 </label>
 <label class="flex items-center gap-2 cursor-pointer group">
-<input checked="" class="text-gray-500 focus:ring-gray-500 bg-background-dark border-border-color" name="stance" type="radio"/>
+<input checked="" class="text-gray-500 focus:ring-gray-500 bg-background-dark border-border-color" id="assembly_stance_neutral" name="stance" type="radio" value="neutral"/>
 <span class="text-sm text-text-secondary group-hover:text-white transition-colors">Neutral Inquiry</span>
 </label>
 </div>
-<span class="text-xs text-text-secondary">Your ID: <span class="font-mono text-white">Observer-992</span></span>
+<div class="flex items-center gap-2">
+<button class="text-[11px] px-2 py-1 rounded border border-green-500/50 text-green-300 hover:bg-green-500/10 transition-colors" id="assembly_vote_intelligent" type="button">Vote Intelligent</button>
+<button class="text-[11px] px-2 py-1 rounded border border-red-500/50 text-red-300 hover:bg-red-500/10 transition-colors" id="assembly_vote_idiotic" type="button">Vote Idiotic</button>
+</div>
+</div>
+<div class="mt-2 flex justify-between items-center px-1">
+<span class="text-xs text-text-secondary">Your ID: <span class="font-mono text-white" id="assembly_user_id">Observer-992</span></span>
+<span class="text-xs text-text-secondary" id="assembly_action_status">Awaiting input.</span>
 </div>
 </div>
 </div>

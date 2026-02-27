@@ -90,14 +90,14 @@
 <div class="space-y-2">
 <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-surface-dark cursor-pointer group transition-colors">
 <div class="relative flex items-center justify-center w-5 h-5 rounded border border-slate-600 group-hover:border-primary">
-<input class="peer appearance-none w-full h-full rounded checked:bg-primary checked:border-primary focus:ring-0" type="checkbox"/>
+<input class="peer appearance-none w-full h-full rounded checked:bg-primary checked:border-primary focus:ring-0" id="archive_verdict_intelligent" type="checkbox" value="Intelligent"/>
 <span class="material-symbols-outlined text-white absolute text-[16px] opacity-0 peer-checked:opacity-100">check</span>
 </div>
 <span class="text-slate-300 text-sm font-sans">Intelligent</span>
 </label>
 <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-surface-dark cursor-pointer group transition-colors">
 <div class="relative flex items-center justify-center w-5 h-5 rounded border border-slate-600 group-hover:border-red-500">
-<input class="peer appearance-none w-full h-full rounded checked:bg-red-500 checked:border-red-500 focus:ring-0" type="checkbox"/>
+<input class="peer appearance-none w-full h-full rounded checked:bg-red-500 checked:border-red-500 focus:ring-0" id="archive_verdict_idiotic" type="checkbox" value="Idiotic"/>
 <span class="material-symbols-outlined text-white absolute text-[16px] opacity-0 peer-checked:opacity-100">check</span>
 </div>
 <span class="text-slate-300 text-sm font-sans">Idiotic</span>
@@ -107,7 +107,7 @@
 <!-- Categories Group -->
 <div>
 <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 font-sans">Topic</h4>
-<div class="space-y-1">
+<div class="space-y-1" id="archive_topic_list">
 <button class="w-full text-left px-3 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-surface-dark text-sm flex items-center justify-between group transition-colors">
 <span class="font-sans">Technology</span>
 <span class="text-xs bg-slate-800 text-slate-400 py-0.5 px-2 rounded-full group-hover:text-white">42</span>
@@ -129,7 +129,7 @@
 <!-- AI Delegates -->
 <div>
 <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 font-sans">Participating AI</h4>
-<div class="flex flex-wrap gap-2">
+<div class="flex flex-wrap gap-2" id="archive_delegate_list">
 <button class="px-3 py-1 rounded border border-slate-700 hover:border-primary text-slate-400 hover:text-primary text-xs font-sans transition-colors">GPT-4</button>
 <button class="px-3 py-1 rounded border border-slate-700 hover:border-primary text-slate-400 hover:text-primary text-xs font-sans transition-colors">Claude 3</button>
 <button class="px-3 py-1 rounded border border-slate-700 hover:border-primary text-slate-400 hover:text-primary text-xs font-sans transition-colors">Llama 2</button>
@@ -152,11 +152,11 @@
 <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 group-focus-within:text-primary transition-colors">
 <span class="material-symbols-outlined">search</span>
 </span>
-<input class="w-full md:w-64 bg-surface-dark border border-border-dark text-slate-200 rounded-lg pl-10 pr-4 py-2.5 focus:ring-1 focus:ring-primary focus:border-primary font-sans text-sm placeholder:text-slate-600" placeholder="Search resolutions..." type="text"/>
+<input class="w-full md:w-64 bg-surface-dark border border-border-dark text-slate-200 rounded-lg pl-10 pr-4 py-2.5 focus:ring-1 focus:ring-primary focus:border-primary font-sans text-sm placeholder:text-slate-600" id="archive_search_input" placeholder="Search resolutions..." type="text"/>
 </div>
-<button class="flex items-center justify-center gap-2 bg-surface-dark border border-border-dark hover:border-slate-500 text-slate-300 px-4 py-2.5 rounded-lg transition-colors font-sans text-sm font-medium">
+<button class="flex items-center justify-center gap-2 bg-surface-dark border border-border-dark hover:border-slate-500 text-slate-300 px-4 py-2.5 rounded-lg transition-colors font-sans text-sm font-medium" id="archive_sort_button" type="button">
 <span class="material-symbols-outlined text-[20px]">sort</span>
-<span>Date: Newest</span>
+<span id="archive_sort_label">Date: Newest</span>
 </button>
 </div>
 </div>
@@ -392,17 +392,17 @@
 </div>
 <!-- Pagination -->
 <div class="mt-12 flex items-center justify-between border-t border-border-dark pt-6">
-<button class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-400 bg-surface-dark border border-border-dark rounded-lg hover:bg-slate-800 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+<button class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-400 bg-surface-dark border border-border-dark rounded-lg hover:bg-slate-800 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed" id="archive_prev_page" type="button">
 <span class="material-symbols-outlined text-lg">arrow_back</span> Previous
                 </button>
-<div class="hidden sm:flex items-center gap-2">
+<div class="hidden sm:flex items-center gap-2" id="archive_page_numbers">
 <button class="px-4 py-2 text-sm font-bold text-white bg-primary rounded-lg">1</button>
 <button class="px-4 py-2 text-sm font-medium text-slate-400 hover:text-white transition-colors">2</button>
 <button class="px-4 py-2 text-sm font-medium text-slate-400 hover:text-white transition-colors">3</button>
 <span class="px-2 text-slate-600">...</span>
 <button class="px-4 py-2 text-sm font-medium text-slate-400 hover:text-white transition-colors">12</button>
 </div>
-<button class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-400 bg-surface-dark border border-border-dark rounded-lg hover:bg-slate-800 hover:text-white transition-colors">
+<button class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-400 bg-surface-dark border border-border-dark rounded-lg hover:bg-slate-800 hover:text-white transition-colors" id="archive_next_page" type="button">
                     Next <span class="material-symbols-outlined text-lg">arrow_forward</span>
 </button>
 </div>

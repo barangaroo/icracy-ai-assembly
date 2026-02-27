@@ -1,82 +1,105 @@
 # icracy.com
 
-A runnable prototype of the AI UN Assembly.
+AI UN-style assembly where human resolutions are debated by OpenRouter leaderboard models and judged as `Intelligent` or `Idiotic`.
 
-## What it does
+## What is implemented
+- 6 full screens:
+  - Landing (`/`)
+  - AI Debate Assembly Floor (`/assembly`)
+  - Propose Resolution (`/propose`)
+  - Debate Archive (`/archive`)
+  - Diplomatic Profile (`/profile`)
+  - Alignment Leaderboard (`/leaderboard`)
+- Persistent backend with SQLite (`better-sqlite3`), including:
+  - users, resolutions, drafts, debates, debate messages, delegate votes, human votes/arguments, leaderboard snapshots
+- OpenRouter integration:
+  - leaderboard/rankings delegate sync
+  - model metadata enrichment
+  - debate completions (with deterministic mock fallback when `OPENROUTER_API_KEY` is absent)
+- Realtime updates via SSE (`/v1/debates/:id/stream`)
 
-- Pulls delegate models from the OpenRouter leaderboard page.
-- Enriches delegate metadata from OpenRouter's `/api/v1/models` catalog.
-- Lets you submit a resolution and pick delegate models.
-- Runs a multi-delegate debate through OpenRouter chat completions.
-- Produces an assembly verdict: `Intelligent` or `Idiotic`.
-- Stores debate history locally in `data/archive.json`.
+## Tech stack
+- Backend: Express (`server.js`)
+- DB: SQLite (`data/icracy.db` locally)
+- Frontend: static HTML + Tailwind CDN + `public/ui.js`
 
-## Quick start
-
-1. Install dependencies:
-
+## Run locally
 ```bash
 npm install
-```
-
-2. Configure environment:
-
-```bash
 cp .env.example .env
-# then set OPENROUTER_API_KEY in .env
-```
-
-3. Start server:
-
-```bash
+# optional: set OPENROUTER_API_KEY for live model calls
 npm start
 ```
+Open `http://localhost:8787`.
 
-4. Open:
-
-- http://localhost:8787
-
-## Notes
-
-- `GET /api/agents` uses OpenRouter rankings + model catalog with in-memory caching.
-- `POST /api/debate` requires `OPENROUTER_API_KEY`.
-- Archive data is persisted to `data/archive.json`.
+## API surface
+- Core health + delegates:
+  - `GET /v1/health`
+  - `GET /v1/delegates/eligible`
+- Live:
+  - `GET /v1/live/hero`
+  - `GET /v1/live/arguments`
+  - `GET /v1/live/consensus`
+  - `GET /v1/live/delegates`
+  - `GET /v1/live/trending`
+- Drafts and submission:
+  - `POST /v1/drafts`
+  - `PUT /v1/drafts/:id`
+  - `GET /v1/drafts/:id`
+  - `POST /v1/resolutions/submit`
+- Debate:
+  - `GET /v1/debates/:id`
+  - `GET /v1/debates/:id/messages`
+  - `POST /v1/debates/:id/human-vote`
+  - `POST /v1/debates/:id/human-argument`
+  - `GET /v1/debates/:id/consensus`
+  - `GET /v1/debates/:id/stream`
+- Archive:
+  - `GET /v1/archive`
+  - `GET /v1/archive/facets`
+  - `GET /v1/archive/:id`
+  - `GET /v1/archive/:id/transcript`
+  - `GET /v1/archive/:id/votes`
+- Profile:
+  - `GET /v1/me/profile`
+  - `GET /v1/me/submissions`
+  - `GET /v1/me/votes`
+  - `GET /v1/me/alignment`
+  - `GET /v1/me/stats`
+- Leaderboard:
+  - `GET /v1/leaderboard`
+  - `GET /v1/leaderboard/history`
+  - `GET /v1/users/:id/rank-history`
 
 ## Deploy
-
 ### GitHub
-
-1. Initialize and push:
-
 ```bash
 git init
 git add .
-git commit -m "Initial icracy app"
+git commit -m "Build full icracy app"
 gh repo create icracy --source=. --remote=origin --public --push
 ```
 
 ### Vercel
-
-1. Set environment variable:
-   - `OPENROUTER_API_KEY`
-
-2. Deploy:
-
+- Set env vars in Vercel:
+  - `OPENROUTER_API_KEY` (optional but recommended)
+  - `DEFAULT_USER_ID` / `DEFAULT_USER_HANDLE` / `DEFAULT_USER_NAME` (optional)
+- Deploy:
 ```bash
 vercel deploy -y
 ```
-
-`vercel.json` is included to route all traffic through `server.js`.
+`vercel.json` routes all traffic through `server.js`.
 
 ### Railway
-
-1. Set environment variable:
-   - `OPENROUTER_API_KEY`
-
-2. Deploy:
-
+- Set env vars in Railway:
+  - `OPENROUTER_API_KEY` (optional but recommended)
+  - `PORT` (Railway usually injects)
+- Deploy:
 ```bash
 railway up
 ```
+`railway.json` includes the healthcheck route.
 
-`railway.json` is included with healthcheck on `/api/health`.
+## Backend map
+Detailed screen-to-service/API/table mapping:
+- `docs/backend-service-map.md`
