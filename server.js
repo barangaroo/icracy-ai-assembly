@@ -551,8 +551,24 @@ app.post("/api/debate", async (req, res) => {
   res.status(201).json(record);
 });
 
-app.get(/^(?!\/api).*/, (_req, res) => {
+app.get("/", (_req, res) => {
   res.sendFile(path.join(PUBLIC_DIR, "index.html"));
+});
+
+app.get("/assembly", (_req, res) => {
+  res.sendFile(path.join(PUBLIC_DIR, "assembly.html"));
+});
+
+app.get("/propose", (_req, res) => {
+  res.sendFile(path.join(PUBLIC_DIR, "propose.html"));
+});
+
+app.get("/archive", (_req, res) => {
+  res.sendFile(path.join(PUBLIC_DIR, "archive.html"));
+});
+
+app.get(/^(?!\/api).*/, (_req, res) => {
+  res.redirect("/");
 });
 
 async function ensureDataFiles() {
