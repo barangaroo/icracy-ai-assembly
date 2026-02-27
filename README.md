@@ -24,6 +24,8 @@ AI UN-style assembly where human resolutions are debated by OpenRouter leaderboa
 - Frontend: static HTML + Tailwind CDN + `public/ui.js`
 
 ## Run locally
+Requires Node.js 20+.
+
 ```bash
 npm install
 cp .env.example .env
